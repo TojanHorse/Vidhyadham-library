@@ -1,0 +1,28 @@
+modules = ["nodejs-20", "web"]
+run = "npm run dev"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "npm run build && npm run preview"]
+
+[workflows]
+runButton = "Production Build"
+
+[[workflows.workflow]]
+name = "Production Build"
+author = 45162198
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run build"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run preview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
